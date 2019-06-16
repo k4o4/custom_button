@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Custom</title>
+</head>
+<body>
+  <script src="//code.jivosite.com/widget.js" jv-id="eP7nReZ3Xu" async></script>
+  <style type="text/css">
+  	/* скрываем оригинальный виджет - чтобы не было два ярлыка на экране*/
+	#jivo_chat_widget{
+		display: none;
+	}
+
+	/* стиль по умолчанию - для оффлайн сообщений, если никого нет в онлайне */
+	#jivo_custom_widget{
+		position: fixed;
+		left: -3px;
+		top: 30%;
+		width: 35px;
+		z-index: 300000;
+		cursor: pointer;
+		
+		height: 222px;
+		background-image: url(images/jivo_widget_offline.png);
+	}
+
+	/* при наведении ярлык должен сдвигаться вправо на 3px */
+	#jivo_custom_widget:hover{
+		left:0;
+	}
+
+	/* если есть операторы в онлайне - показываем другой ярлык*/
+	#jivo_custom_widget.jivo_online{
+		height: 178px;
+		background-image: url(images/jivo_widget_online.png);
+	}
+  </style>
+
+  <script type="text/javascript">
+  	/*
+	Коллбек-функция, вызывается сразу после того, как
+	JivoSite окончательно загрузился
+*/
+window.jivo_onLoadCallback = function (){
+	// Создаем элемент DIV для ярлыка
+		window.jivo_cstm_widget = document.createElement('div');
+		jivo_cstm_widget.setAttribute('id', 'jivo_custom_widget');
+		document.body.appendChild(jivo_cstm_widget);
+
+	// Добавляем обработчик клика по ярлыку - чтобы при клике разворачивалось окно
+	jivo_cstm_widget.onclick = function(){
+		jivo_api.open();
+	}
+
+	// Изменяем CSS класс, если есть операторы в онлайне
+	if (jivo_config.chat_mode == "online"){
+		jivo_cstm_widget.setAttribute("class", "jivo_online");
+	}
+
+	// Теперь можно показать ярлык пользователю
+	window.jivo_cstm_widget.style.display='block';
+
+}
+
+/*
+	Коллбек-функции jivo_onOpen и jivo_onClose вызываеются всегда,
+	когда окно чата JivoSite разворачивается или сворвачивается
+	пользователем, либо по правилу активного приглашения.
+*/
+function jivo_onOpen(){
+	// Если чат развернут - скрываем ярлык
+	if (jivo_cstm_widget)
+		jivo_cstm_widget.style.display = 'none';
+
+}
+function jivo_onClose(){
+	// Если чат свернут - показываем ярлык
+	if (jivo_cstm_widget)
+		jivo_cstm_widget.style.display = 'block';
+}
+  </script>
+</body>
+</html>
