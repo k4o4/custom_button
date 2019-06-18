@@ -25,7 +25,12 @@
   </style>
 
   <script type="text/javascript">
-  	var customLabel = document.getElementById('jivo_custom_widget');
+  	var jivo_onLoadCallback = function() {
+  		var customLabel = document.createElement('div');
+		customLabel.id = 'jivo_custom_widget';
+		document.appendChild(customLabel);
+  	}
+
 
   </script>
 
