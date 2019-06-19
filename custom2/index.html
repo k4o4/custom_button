@@ -4,7 +4,7 @@
 	<title>Custom</title>
 </head>
 <body>
-	<script src="//code.jivosite.com/widget.js" jv-id="nvuyRgznWi" async></script>
+	<script src="//code.jivosite.com/widget.js" jv-id="229906" async></script>
 
 	<div id="jivo_custom_widget">
 		<div id="icon"></div>
@@ -13,13 +13,14 @@
 	<style type="text/css">
 		#jivo_custom_widget {
 			position: fixed;
-			bottom: 30px;
-			right: 30px;
+			bottom: 50px;
+			right: 50px;
 			width: 70px;
 			height: 70px;
 			background: #345;
 			border-radius: 50px;
 			cursor: pointer;
+			box-shadow: 1px 2px 3px 0 rgba(15,65,33,.08), 5px 10px 20px 0 rgba(18,43,26,.12);
 		}
 		#icon {
 			background-position: 0 1px;
@@ -49,6 +50,15 @@
 			console.log(jivo_config.joint);
 			var jivo_custom_widget = document.getElementById('jivo_custom_widget');
 			jivo_custom_widget.className = jivo_config.chat_mode == 'online' ? 'online' : 'offline';
+			jivo_custom_widget.addEventListener('click', jivo_api.open);
+		}
+
+		function jivo_onOpen(){
+			jivo_custom_widget.style.display = 'none';
+		}
+
+		function jivo_onClose(){
+			jivo_custom_widget.style.display = 'block';
 		}
 
 
