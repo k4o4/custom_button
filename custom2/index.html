@@ -51,6 +51,12 @@
 			var jivo_custom_widget = document.getElementById('jivo_custom_widget');
 			jivo_custom_widget.className = jivo_config.chat_mode == 'online' ? 'online' : 'offline';
 			jivo_custom_widget.addEventListener('click', jivo_api.open);
+
+			if(jivo_config.widget_color2) {
+				jivo_custom_widget.style.background = 'linear-gradient(95deg, ' + jivo_config.widget_color + ' 20%, '+ jivo_config.widget_color2 + ' 80%)';
+			} else {
+				jivo_custom_widget.style.background = jivo_config.widget_color;
+			}
 		}
 
 		function jivo_onOpen(){
