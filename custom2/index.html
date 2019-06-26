@@ -218,7 +218,7 @@
 					} else {
 						linksMenu.insertBefore(linkContainer, linksMenu.firstChild);
 					}
-					linkContainer.addEventListener('click', function(){jivo_api.open();});
+					linkContainer.addEventListener('click', function(){jivo_api.open({start: 'call'});});
 				}
 				if(type == 'fb') {
 					linksMenu.insertBefore(linkContainer, linksMenu.firstChild);
