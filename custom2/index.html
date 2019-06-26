@@ -1,29 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Custom</title>
+	<title>Custom widget</title>
 </head>
 <body>
-	<script src="//code.jivosite.com/widget.js" jv-id="nvuyRgznWi" async></script>
 
-	<div id="jivo_custom_widget">
-		<div id="icon"></div>
-	</div>
+<script type="text/javascript">
+	/*mocking jivo_api, comment with real widget*
+	var jivo_api = {};
+	var jivo_config = {};
+
+	jivo_api.open = function() {
+		console.log('api open');
+	}
+	jivo_api.close = function() {
+		console.log('api close');
+	}
+	jivo_api.isCallbackEnabled = function(callback) {
+		callback({result: 'ok'});
+		console.log('api callback ok');
+	}
+
+	jivo_config.widget_color = 'rgb(0, 85, 201)';
+	jivo_config.widget_color2 = 'rgb(24, 185, 212)';
+*/
+
+
+</script>
+
 
 	<style type="text/css">
 		#jivo_custom_widget {
 			position: fixed;
 			bottom: 50px;
+			box-shadow: 0 19px 38px 0 rgba(34,36,43,.3);
 			right: 50px;
 			width: 70px;
 			height: 70px;
-			background: #345;
 			border-radius: 50px;
 			cursor: pointer;
 			box-shadow: 1px 2px 3px 0 rgba(15,65,33,.08), 5px 10px 20px 0 rgba(18,43,26,.12);
 		}
-		#icon {
-			background-position: 0 1px;
+		.jivo_icon {
 			display: block;
 			position: absolute;
 			top: 0;
@@ -32,25 +50,221 @@
 			bottom: 0;
 			margin: auto;
 		}
-		#jivo_custom_widget.offline > #icon {
+		#jivo_custom_widget.offline > .jivo_icon {
+			background-position: 0px 0px;
 			width: 25px;
 			height: 20px;
 			background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2225%22%20height%3D%2220%22%20viewBox%3D%220%200%2025%2020%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill%3D'%23fff'%20d%3D%22M22.5%205l-10%206.25L2.5%205V2.5l10%206.25%2010-6.25V5zm0-5h-20A2.49%202.49%200%200%200%200%202.5v15A2.5%202.5%200%200%200%202.5%2020h20a2.5%202.5%200%200%200%202.5-2.5v-15A2.5%202.5%200%200%200%2022.5%200z%22%2F%3E%3C%2Fsvg%3E%0A");
 		}
-		#jivo_custom_widget.online > #icon {
+		#jivo_custom_widget.online > .jivo_icon {
 			background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2230%22%20height%3D%2231%22%20viewBox%3D%220%200%2030%2031%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M2.967%2022.226l-.025.008s7.698%2013.9%2026.975%205.546c0%200-1.495-1.752-4.384-3.52a14.067%2014.067%200%200%200%202.588-14.047c-2.655-7.297-10.7-11.07-17.964-8.425C2.89%204.433-.847%2012.492%201.81%2019.79c.313.863.703%201.677%201.157%202.436z%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E%0A");
 			background-position: 0px 0px;
 			width: 30px;
 			height: 31px;
 		}
+		.jivo_bridge {
+			border-bottom-left-radius: 50px;
+			opacity: 0;
+			right: 0px;
+			position: absolute;
+			bottom: -50px;
+			height: 50px;
+			width: 300px;
+
+		}
+		#linksMenu {
+			opacity: 0;
+			bottom: 80px;
+			border-radius: 4px!important;
+			right: 0px;
+			position: absolute;
+			border-radius: 4px!important;
+			font-family: Arial,sans-serif;
+			font-weight: 400;
+			font-size: 15px!important;
+			line-height: 20px;
+			background-color: #fff;
+			color: #545d6b;
+			z-index: 1000000;
+			font-smoothing: antialiased;
+			max-width: 100%;
+			box-shadow: 0 5px 20px 0 rgba(0,0,0,.2);
+			width: 100%;
+			min-width: 300px;
+			max-height: none!important;
+			transition-property: opacity, transform;
+			transition-duration: .2s;
+
+		}
+		.jivo_link {
+			box-sizing: border-box!important;
+			padding-left: 80px!important;
+			padding-right: 15px!important;
+			line-height: 20px!important;
+			text-decoration: none;
+			font-size: 15px!important;
+			vertical-align: middle!important;
+			display: table-cell!important;
+			height: 66px!important;
+			font-weight: 400;
+			color: #545d6b!important;
+			-webkit-transform: translateZ(0)!important;
+			transform: translateZ(0)!important;
+			cursor: pointer!important;
+			width: 310px!important;
+		}
+		#jivo_custom_widget:hover > #linksMenu {
+			display: block!important;
+			transform: translateY(-10px);
+			opacity: 1;
+		}
+		.jivo_links_container {
+			height: 66px;
+			display: block;
+			position: relative;
+			z-index: 1;
+			max-height: 66px;
+		}
+		.jivo_links_container:hover {
+			background-color: #f5f5f5;
+		}
+		.jivo_link.phone {
+			background: transparent url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M0 0h24v24H0z'/%3E%3Cpath d='M0 0h24v24H0z'/%3E%3Cpath fill='%2302A95F' fill-rule='nonzero' d='M18.904 15.214a2.113 2.113 0 0 0-1.527-.624c-.598 0-1.185.228-1.624.66a3.566 3.566 0 0 0-.917 1.428c-.72-.072-3.08-1.569-4.533-3.033C8.898 12.216 7.407 9.843 7.32 9.11a3.547 3.547 0 0 0 1.49-.852c.44-.42.697-.96.721-1.549a2.058 2.058 0 0 0-.586-1.548L7.382 3.576A1.927 1.927 0 0 0 5.99 3a2.14 2.14 0 0 0-1.478.6l-.244.24c-.33.3-.586.66-.758 1.057-.024.06-.708 1.56-.452 2.689.05.168 1.42 4.5 5.181 8.063 3.762 3.564 7.844 5.219 8.028 5.279.195.048.415.072.647.072.99 0 2.04-.42 2.077-.432a3.711 3.711 0 0 0 1.112-.708l.244-.24c.818-.78.88-2.053.122-2.822l-1.564-1.584z'/%3E%3C/g%3E%3C/svg%3E") 30px 50% no-repeat;
+		}
+		.jivo_link.chat {
+			background: transparent url("data:image/svg+xml;charset=utf-8,%3Csvg width='23' height='23' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M1 14.7V21l4.176-3H21c.56 0 .999-.448.999-1V2c0-.545-.447-1-.999-1H2a.994.994 0 0 0-1 1v12.7z' stroke='%2300BE64' stroke-width='2'/%3E%3Cpath fill='%2300BE64' d='M5 6h14v2H5zm0 5h11v2H5z'/%3E%3C/g%3E%3C/svg%3E") 28px 51% no-repeat;
+		}
+		.jivo_link.vk {
+			background:transparent url("data:image/svg+xml;charset=utf-8,%3Csvg width='30' height='17' viewBox='0 0 30 17' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25.82 10.81c.994.972 2.045 1.888 2.937 2.959.395.476.768.967 1.053 1.519.405.785.039 1.65-.665 1.696l-4.37-.002c-1.127.094-2.027-.36-2.783-1.132-.605-.618-1.165-1.274-1.747-1.912a4.14 4.14 0 0 0-.786-.7c-.597-.388-1.115-.27-1.456.354-.347.633-.426 1.335-.46 2.041-.047 1.03-.358 1.302-1.392 1.349-2.209.104-4.306-.23-6.253-1.346-1.718-.984-3.05-2.373-4.208-3.946C3.433 8.63 1.705 5.264.15 1.806-1.802 1.026.058.608.916.593A118.46 118.46 0 0 1 5.195.591c.58.009.963.342 1.187.89.771 1.9 1.715 3.706 2.9 5.381.315.446.637.892 1.095 1.206.507.347.893.232 1.131-.333.152-.359.218-.745.252-1.129.113-1.32.128-2.64-.07-3.956-.122-.821-.584-1.353-1.403-1.508-.417-.08-.355-.235-.153-.474.352-.412.682-.668 1.34-.668h4.94c.777.154.95.503 1.057 1.287l.004 5.494c-.009.303.151 1.203.697 1.404.436.143.724-.207.986-.484 1.183-1.257 2.027-2.742 2.78-4.28.335-.677.623-1.379.902-2.08.207-.521.53-.778 1.117-.766l4.753.004c.141 0 .284.002.42.025.802.137 1.021.482.774 1.265-.39 1.23-1.149 2.253-1.89 3.282-.793 1.099-1.64 2.16-2.427 3.264-.722 1.01-.665 1.518.232 2.394z' fill='%23507299' fill-rule='evenodd'/%3E%3C/svg%3E") 24px 50% no-repeat!important;
+		}
+		.jivo_link.fb {
+			background:transparent url("data:image/svg+xml;charset=utf-8,%3Csvg width='26' height='26' viewBox='0 0 26 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13 0C5.82 0 0 5.39 0 12.037c0 3.788 1.89 7.167 4.845 9.373V26l4.426-2.43c1.181.328 2.433.504 3.729.504 7.18 0 13-5.39 13-12.037C26 5.389 20.18 0 13 0zm1.292 16.21l-3.31-3.531-6.46 3.53 7.105-7.542 3.392 3.53 6.379-3.53-7.106 7.543z' fill='%230084FF' fill-rule='evenodd'/%3E%3C/svg%3E") 27px 50% no-repeat!important;
+		}
+		.jivo_link_title {
+			color: #222d38;
+			font-size: 15px!important;
+		}
+		.jivo_link:hover > .jivo_link_title {
+			color: #0044d3;
+		}
+		.jivo_corner {
+			background-color: #fff;
+			position: absolute;
+			width: 0;
+			height: 0;
+			right: 30px;
+			bottom: -19px;
+			box-sizing: border-box;
+			border: 10px solid #000;
+			border-color: transparent;
+			-webkit-transform-origin: 0 0;
+			transform-origin: 0 0;
+			-webkit-transform: rotate(-45deg);
+			transform: rotate(-45deg);
+			box-shadow: -6px 8px 5px 0 rgba(0,0,0,.07);
+		}
+		.jivo_links_container:hover + .jivo_corner {
+			background-color: #f5f5f5;
+		}
 	</style>
 
 	<script type="text/javascript">
+		var jivo_custom_config = {
+			chat: {
+				title: 'Open chat'
+			},
+			phone: {
+				title: 'Schedule a call',
+				enableWhenUnavailable: 0
+			},
+			vk: {
+				title: 'Message in vk.com',
+				embedWidget: 1
+			},
+			fb: {
+				title: 'Message in Facebook',
+				embedWidget: 1
+			}
+		}
+		
+
 		var jivo_onLoadCallback = function() {
-			console.log(jivo_config.joint);
-			var jivo_custom_widget = document.getElementById('jivo_custom_widget');
-			jivo_custom_widget.className = jivo_config.chat_mode == 'online' ? 'online' : 'offline';
-			jivo_custom_widget.addEventListener('click', jivo_api.open);
+
+			function addButton(type) {
+				var linkContainer = document.createElement('jdiv');
+				linkContainer.className = 'jivo_links_container';
+				var link = document.createElement('jdiv');
+				link.className = 'jivo_link ' + type;
+				var linkTitle = document.createElement('jdiv');
+				linkTitle.className = 'jivo_link_title';
+				linkTitle.innerHTML = jivo_custom_config[type].title;
+				link.appendChild(linkTitle);
+				linkContainer.appendChild(link);
+
+				if(type == 'chat') {
+					linkContainer.addEventListener('click', function(){jivo_api.open();});
+					linksMenu.insertBefore(linkContainer, linksMenu.firstChild);
+				}
+				if(type == 'phone') {
+					if(!jivo_custom_config.phone.enableWhenUnavailable) {
+						jivo_api.isCallbackEnabled(function(a){
+							if(a.result == 'ok') {
+								linksMenu.insertBefore(linkContainer, linksMenu.firstChild);
+							}
+						});
+					} else {
+						linksMenu.insertBefore(linkContainer, linksMenu.firstChild);
+					}
+					linkContainer.addEventListener('click', function(){jivo_api.open();});
+				}
+				if(type == 'fb') {
+					linksMenu.insertBefore(linkContainer, linksMenu.firstChild);
+				}
+				if(type == 'vk') {
+					linksMenu.insertBefore(linkContainer, linksMenu.firstChild);
+				}
+
+			}
+
+			/*rendering the widget*/
+
+			var jivo_custom_widget = document.createElement('jdiv');
+			jivo_custom_widget.id = 'jivo_custom_widget';
+			document.body.appendChild(jivo_custom_widget);
+
+			var linksMenu = document.createElement('jdiv');
+			linksMenu.id = 'linksMenu';
+			jivo_custom_widget.appendChild(linksMenu);
+
+			var jivo_icon = document.createElement('jdiv');
+			jivo_icon.className = 'jivo_icon';
+			jivo_custom_widget.appendChild(jivo_icon);
+
+			var triangle = document.createElement('jdiv');
+			triangle.className = 'jivo_corner';
+			linksMenu.appendChild(triangle);
+
+			var bridge = document.createElement('jdiv');
+			bridge.className = 'jivo_bridge';
+			linksMenu.appendChild(bridge);
+
+			/*adding some logic*/
+
+			linksMenu.addEventListener('transitionend', function(e){
+				if(e.propertyName == 'transform') {
+					linksMenu.style.display = getComputedStyle(linksMenu).opacity == 0 ? 'none' : 'block';
+				}
+			});
+			jivo_custom_widget.className = 'online';// jivo_config.chat_mode == 'online' ? 'online' : 'offline';
+			linksMenu.style.display = 'none';
+
+			/* something like applying the config*/
+
+			for(var option in jivo_custom_config) {
+				console.log(option);
+				addButton(option);
+			}
+
 
 			if(jivo_config.widget_color2) {
 				jivo_custom_widget.style.background = 'linear-gradient(95deg, ' + jivo_config.widget_color + ' 20%, '+ jivo_config.widget_color2 + ' 80%)';
@@ -67,6 +281,7 @@
 			jivo_custom_widget.style.display = 'block';
 		}
 
+//jivo_onLoadCallback();
 
 	</script>
 
